@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
  import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
