@@ -1,7 +1,8 @@
 "use client"
 
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 
 
 const timeSlots = [
@@ -20,19 +21,76 @@ export default function BookAppointmentModal({isOpen,isClose}) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [checkuptype,setcheckuptype]=useState<string | null>("")
   const [Description,setdescription]=useState<string | null>("")
-  const [date,setdate]=useState<string | null>()
+  const [date,setdate]=useState<Date|null>()
   const [error,seterror]=useState("")
+  const [bookedslots,setbookedslots]=useState<string|null>("")
+  const [availaibleslot,setavailaibleslots]=useState<string[]>(timeSlots)
+    useEffect(()=>{
+      async function Handle(){
+        if(!date)return
+       try {
+         
+          const res=await axios.post("/api/getbookedslots",{
+          date
+        })
+        if(res.status===200){
+          if(!res.data.data||res.data.data.length===0){
+           
+            setavailaibleslots(timeSlots)
+          }
+          setbookedslots(res.data.data[0].slot_time)
+           
+        }
+       } catch (error:any) {
+        console.log("Error is",error?.message)
+       }
+      }
+      setTimeout(() => {
+        Handle();
+      }, 500);
+       
+  },[date])
   
+  useEffect(()=>{
+    if(!bookedslots)return
+    function Handle(){
+    setavailaibleslots((prev)=>
+    prev.filter((slot) =>slot!==bookedslots)
+    )
+  }
+  Handle();
+  },[bookedslots])
+
   if(!isOpen)return null
   if(error){
     setTimeout(() => {
       seterror("")
     }, 3000);
   }
+ 
+ 
+
+ function Verifypayment(){
+  if(!date||!checkuptype||!selectedSlot){
+    alert("Plz fill all the details")
+    return false
+  }
+  const today=new Date()
+  today.setHours(0,0,0,0)
+  const maxdate=new Date(today)
+  maxdate.setDate(today.getDate()+15)
+  const selectedDate=new Date(date)
+  if(maxdate<selectedDate||today>selectedDate){
+    alert("Date you have entered either exceeds the limit or its a past date plz check")
+    return false
+  }
+  return true
+  
+}
 async function HandlePayment() {
   const { data } = await axios.post("/api/createpayment");
-  
-   const razorpayKey=process.env.NEXT_PUBLIC_RAZORPAY_KEY
+
+  const razorpayKey=process.env.NEXT_PUBLIC_RAZORPAY_KEY
   const options = {
     key: razorpayKey,
     amount: data.amount,
@@ -67,8 +125,6 @@ async function HandlePayment() {
   const rzp = new window.Razorpay(options);
   rzp.open();
 }
-
- 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
@@ -109,7 +165,7 @@ async function HandlePayment() {
               Available Time Slots
             </p>
             <div className="grid grid-cols-3 gap-3">
-              {timeSlots.map((slot) => (
+              {availaibleslot.map((slot) => (
                 <button
                   key={slot}
                   onClick={() => setSelectedSlot(slot)}
@@ -166,7 +222,11 @@ async function HandlePayment() {
           >
             Cancel
           </button>
-          <button onClick={HandlePayment} className="rounded-lg bg-blue-600 px-5 py-2 text-sm text-white hover:bg-blue-700">
+          <button onClick={()=>{
+            if(Verifypayment()){
+              HandlePayment()
+            }
+          }} className="rounded-lg bg-blue-600 px-5 py-2 text-sm text-white hover:bg-blue-700">
             Confirm Booking
           </button>
         </div>

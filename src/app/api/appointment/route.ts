@@ -11,7 +11,7 @@ export async function POST(req:NextRequest){
     if(!razorpay_payment_id||!razorpay_order_id||!razorpay_signature||!checkuptype||!selectedSlot||!date){
       return NextResponse.json({message:"Cant receive the Payment response"},{status:402})
     }
-
+    
     const body=razorpay_order_id+'|'+razorpay_payment_id
 
     const expectedSignature = crypto
@@ -67,7 +67,8 @@ export async function POST(req:NextRequest){
         slot_time:selectedSlot,
         User_id:Userid,
         description:Description,
-        status:"BOOKED"
+        status:"BOOKED",
+        isBooked:true
     })   
     
     return NextResponse.json({message:"Appointment created"},{status:200})

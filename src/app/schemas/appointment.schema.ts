@@ -9,7 +9,8 @@ interface Appointment{
     type:string,
     description?:string,
     date:Date,
-    slot_time:string
+    slot_time:string,
+    isBooked:boolean
 }
 
 const AppointmentSchema=new mongoose.Schema<Appointment>(
@@ -40,6 +41,10 @@ const AppointmentSchema=new mongoose.Schema<Appointment>(
     },
     slot_time:{
         type:String,
+        required:true
+    },
+    isBooked:{
+        type:Boolean,
         required:true
     },
     User_id:{
