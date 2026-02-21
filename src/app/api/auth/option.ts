@@ -51,9 +51,9 @@ CredentialsProvider({
 
     // ✅ RETURN MINIMAL SAFE OBJECT
     return {
-      id: User._id?.toString(),
+      id: User.id?.toString(),
       email: User.email,
-      role: User.Role,
+      Role: User.Role,
       username: User.username,
       name: User.name,
       phoneNumber: User.PhoneNumber,
@@ -65,13 +65,13 @@ CredentialsProvider({
 callbacks:{
     async jwt({ token, user }) {
       if(user){
-      token._id=user._id?.toString()
+      token._id=user.id?.toString()
       token.username=user.username
       token.name=user.name
       token.email=user.email
-      token.Isverified=user.isVerified
+      token.IsVerified=user.isVerified
       token.PhoneNumber=user.PhoneNumber
-      token.role=user.Role 
+      token.Role=user.Role
       }
       return token
 

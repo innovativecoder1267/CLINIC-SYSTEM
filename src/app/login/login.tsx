@@ -4,16 +4,14 @@ import Link from "next/link";
  import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
- 
-export default function Login() {
+ export default function Login() {
   const [role, setRole] = useState<"ADMIN" | "USER">("USER");
   const [error,seterror]=useState("")
   const [email,setemali]=useState("")
   const [password,setpassword]=useState("")
   const {data:session,status}=useSession()
   const Router=useRouter()
- 
-   
+  console.log("Session is ",session?.user);
   async function HandleLogin(e:React.FormEvent) {
    e.preventDefault();
    seterror("")
@@ -22,7 +20,14 @@ export default function Login() {
     password,
     role,
   });
-      console.log("Session is",session)
+      if(session?.user){
+        if(session.user.Role=="USER"){
+          Router.push("/userdashboard")
+        }
+        else{
+          Router.push("/admindashboard")
+        }
+      }
 
     
      const res=await signIn("credentials",{

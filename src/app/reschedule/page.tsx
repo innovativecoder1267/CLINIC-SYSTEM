@@ -17,8 +17,12 @@ const timeSlots = [
   "02:30 PM",
   "03:00 PM",
 ];
-
-export default function Reschedule({isOpen,isClose,appointmentid}) {
+  interface ReschedulData{
+    isOpen:boolean
+    isClose:()=>void
+    appointmentid:string
+  }
+export default function Reschedule({isOpen,isClose,appointmentid}:ReschedulData) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [checkuptype,setcheckuptype]=useState<string | null>("")
   const [Description,setdescription]=useState<string | null>("")

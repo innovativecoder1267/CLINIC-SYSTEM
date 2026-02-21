@@ -3,12 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, User } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { Calendar, Clock, Router, User } from "lucide-react";
 import BookAppointmentModal from "../confirmbooking/page";
 import Reschedule from "../reschedule/page";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+
+
+ 
  export default function UserDashboard() {
   type Appointment = {
   _id: string;
@@ -17,7 +20,7 @@ import axios from "axios";
   type: string;
   status: string;
 };
-  const [pastAppointment,setpastappointment]=useState<Appointment[]>([])
+   const [pastAppointment,setpastappointment]=useState<Appointment[]>([])
   const [AppointmentInfo,setAppointmentinfo]=useState<Appointment[]>([])
   const [open,setopen]=useState(false)
   const [startdate,setstartdate]=useState<string>("")
@@ -26,6 +29,8 @@ import axios from "axios";
   const {data:session,status}=useSession()
    if(status==="loading")<p>Loading User...</p>
   if(!session)<p>Session Not Found</p>
+  console.log("Session is",session?.user)
+ 
   const Username=session?.user.username
 
    useEffect(()=>{
