@@ -3,15 +3,19 @@ export const dynamic = "force-dynamic";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import { useEffect } from "react";
 export default function VerifyOTP() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email");
-
   const [Otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+  const param = searchParams.get("email");
+  setEmail(param);
+}, [searchParams]);
 
   async function handleVerify() {
     if (!Otp) {
