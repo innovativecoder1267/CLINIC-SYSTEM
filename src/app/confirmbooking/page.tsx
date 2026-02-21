@@ -16,8 +16,11 @@ const timeSlots = [
   "02:30 PM",
   "03:00 PM",
 ];
-
-export default function BookAppointmentModal({isOpen,isClose}) {
+  interface bookingmodel{
+    isOpen:boolean,
+    isClose:()=>void
+  }
+export default function BookAppointmentModal({isOpen,isClose}:bookingmodel) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [checkuptype,setcheckuptype]=useState<string | null>("")
   const [Description,setdescription]=useState<string | null>("")

@@ -11,10 +11,10 @@ export default async function DbConnection(){
     }
 
     try {
-        const mongodburi=process.env.MONGO_URI
+        const mongodburi:unknown=process.env.MONGO_URI
         const db=await mongoose.connect(mongodburi)
         connection.isconnected=db.connections[0].readyState
-        console.log("")
+        console.log("Connected to MongoDB")
     } catch (error) {
         console.log("Error is",error)
         process.exit(1)
