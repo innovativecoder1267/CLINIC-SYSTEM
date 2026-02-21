@@ -35,7 +35,7 @@ CredentialsProvider({
 
      console.log("user verified");
     if(User.Role!=credentials.role){
-      throw new Error("Role Mismatch");
+      throw new Error("Role  Mismatch");
     }
       
 
@@ -51,7 +51,7 @@ CredentialsProvider({
 
     // ✅ RETURN MINIMAL SAFE OBJECT
     return {
-      _id: User._id?.toString(),
+      id: User._id?.toString(),
       email: User.email,
       role: User.Role,
       username: User.username,
