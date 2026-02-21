@@ -24,7 +24,7 @@ export default function BookAppointmentModal({isOpen,isClose}:bookingmodel) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [checkuptype,setcheckuptype]=useState<string | null>("")
   const [Description,setdescription]=useState<string | null>("")
-  const [date,setdate]=useState<Date|null>()
+  const [date,setdate]=useState<string|null>()
   const [error,seterror]=useState("")
   const [bookedslots,setbookedslots]=useState<string|null>("")
   const [availaibleslot,setavailaibleslots]=useState<string[]>(timeSlots)
