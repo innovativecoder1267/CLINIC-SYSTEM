@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = "force-dynamic";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,7 +32,7 @@ export default function VerifyOTP() {
         alert("Email verified successfully 🎉");
         router.push("/login"); // or /dashboard
       }
-    } catch (err: any) {
+    } catch (err:any) {
       setError(err.response?.data?.message || "Invalid OTP");
     } finally {
       setLoading(false);

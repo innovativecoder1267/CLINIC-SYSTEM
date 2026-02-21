@@ -11,7 +11,10 @@ export default async function DbConnection(){
     }
 
     try {
-        const mongodburi:unknown=process.env.MONGO_URI
+        const mongodburi=process.env.MONGO_URI
+        if(!mongodburi){
+            throw new Error("MONGO_URI is not defined in environment variables")
+        }
         const db=await mongoose.connect(mongodburi)
         connection.isconnected=db.connections[0].readyState
         console.log("Connected to MongoDB")
