@@ -1,11 +1,9 @@
 "use client"
 
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
  
-
-
 const timeSlots = [
   "09:00 AM",
   "09:30 AM",
@@ -17,24 +15,61 @@ const timeSlots = [
   "02:30 PM",
   "03:00 PM",
 ];
-  interface ReschedulData{
+
+  interface RescheduleData{
     isOpen:boolean
     isClose:()=>void
     appointmentid:string
   }
-export default function Reschedule({isOpen,isClose,appointmentid}:ReschedulData) {
+export default function Reschedule({isOpen,isClose,appointmentid}:RescheduleData) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [checkuptype,setcheckuptype]=useState<string | null>("")
   const [Description,setdescription]=useState<string | null>("")
   const [date,setdate]=useState<string | null>("")
   const [error,seterror]=useState("")
-  
+  const [availaibleslots,setavailaibleSlots]=useState<string[]>(timeSlots)
+  const [booked,setbooked]=useState<string|null>("")
+
+  useEffect(()=>{
+    async function Handle() {
+      if(!date)return 
+      try {
+        const res=await axios.post("/api/getbookedslots",{
+          date
+        })
+        if(res.status===200){
+          if(!res.data||res.data.data.length===0){
+             setavailaibleSlots(timeSlots)
+          }
+          setbooked(res.data.data[0].slot_time)
+
+        }
+      } catch (error) {
+        console.log("Error is",error)
+      }
+    }
+    setTimeout(() => {
+      Handle();
+    }, 500);
+  },[date])
+
+  useEffect(()=>{
+    if(!booked)return;
+    function handle(){
+    setavailaibleSlots((prev) =>
+    prev?.filter((slot)=>slot!==booked)
+    )
+  }
+  handle();
+
+  },[booked])
   if(!isOpen)return null
   if(error){
     setTimeout(() => {
       seterror("")
     }, 3000);
   }
+
     async function handleclick(){
     try {
       const response=await axios.post("api/reschedule",{
