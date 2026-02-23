@@ -98,6 +98,9 @@ export default function VerifyOTP() {
         <p className="text-xs text-gray-500 text-center mt-6">
           Didn’t receive the code? Check spam or try again.
         </p>
+        <p>
+          Plz check the otp in the console
+        </p>
       </div>
     </div>
   );

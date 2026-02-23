@@ -51,7 +51,7 @@ export async function sendOtpEmail({
       </div>
     </div>
   `;
-  console.log(email,otp)
+  console.log("Mail is",email,otp)
 
   try {
     await resend.emails.send({
@@ -60,7 +60,7 @@ export async function sendOtpEmail({
       subject: "Your verification code",
       html,
     });
-    console.log("Mail sent")
+    console.log("Mail sent",email)
   } catch (error) {
     console.error("Resend OTP email failed:", error);
     throw new Error("Unable to send email");

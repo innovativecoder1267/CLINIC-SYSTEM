@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, Clock, CheckCircle, XCircle, AlertTriangle, Type } from "lucide-react";
+import { CalendarDays, Clock, CheckCircle, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 export default function AdminDashboard() {
   const [TodaySlots,setTodaySlots]=useState([])
   const [AvailableSlots,setAvailaibleSlots]=useState([])
@@ -16,6 +18,14 @@ export default function AdminDashboard() {
   const [startdate,setstartdate]=useState("")
   const [endDate,setendDate]=useState("")
   const [searchpatients,setsearchpatients]=useState<string>("")
+  const {data:session,status}=useSession();
+
+  if(!session){
+    redirect("/")
+  }
+  if(session.user.Role!=="ADMIN"){
+    redirect("/")
+  }
   useEffect(()=>{
     async function SlotGet() {
     try {
@@ -35,10 +45,16 @@ export default function AdminDashboard() {
   },[])
   useEffect(()=>{
      async function AppointmentGetter() {
+      try {
       const res=await axios.get("/api/getappointmentdata")
       if(res.status===200){
-        setappointment(res.data.Appointment)
-       }
+         setappointment(res.data.Appointment)
+       }  
+      } catch (error) {
+        alert("Something bad happened")
+        console.log("Error occured",error)
+      }
+      
     }
     AppointmentGetter();
   },[])

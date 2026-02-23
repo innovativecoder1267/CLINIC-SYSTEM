@@ -7,6 +7,5 @@ import { Suspense } from "react"
       <VerifyOTP/>
       </div>
       </Suspense>
-
     )
  }

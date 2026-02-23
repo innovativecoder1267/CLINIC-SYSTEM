@@ -50,8 +50,5 @@ export  async function POST(req:Request){
     }
  
     await  sendOtpEmail({otp,email})
-    return NextResponse.json({message:"User registered successfully plz verify"},{status:201})
-
+    return NextResponse.json({otp},{status:201})
 }
-
- 

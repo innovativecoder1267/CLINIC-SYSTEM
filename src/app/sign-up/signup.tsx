@@ -14,7 +14,7 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [otp,setotp]=useState("")
   async function HandleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -30,6 +30,7 @@ export default function SignUp() {
       });
 
       if (MakeReq.status === 201) {
+        console.log("Your otp is",MakeReq.data.otp)
         router.push(`/verify?email=${email}`);
       }
     } catch (err: any) {

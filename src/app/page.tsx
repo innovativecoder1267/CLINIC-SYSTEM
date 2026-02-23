@@ -238,12 +238,14 @@ export default function Page() {
         </p>
 
         <div className="mt-10 flex justify-center gap-4">
+          <Link href={"/sign-up"}>
           <button className="px-6 py-3 bg-white text-blue-600 rounded-md font-semibold">
             Get Started Free
           </button>
           <button className="px-6 py-3 border border-white rounded-md">
             Request Demo
           </button>
+          </Link>
         </div>
       </section>
 

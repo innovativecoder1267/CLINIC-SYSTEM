@@ -9,7 +9,7 @@ import Reschedule from "../reschedule/page";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-
+import { redirect } from "next/navigation";
 
  
  export default function UserDashboard() {
@@ -30,7 +30,12 @@ import { useSession } from "next-auth/react";
    if(status==="loading")<p>Loading User...</p>
   if(!session)<p>Session Not Found</p>
   console.log("Session is",session?.user)
- 
+    if(!session){
+      redirect("/")
+    }
+    if(session.user.Role!=="USER"){
+      redirect("/")
+    }
   const Username=session?.user.username
 
    useEffect(()=>{

@@ -20,14 +20,7 @@ import { useRouter } from "next/navigation";
     password,
     role,
   });
-      if(session?.user){
-        if(session.user.Role=="USER"){
-          Router.push("/userdashboard")
-        }
-        else{
-          Router.push("/admindashboard")
-        }
-      }
+ 
 
     
      const res=await signIn("credentials",{
