@@ -28,9 +28,10 @@ import { redirect } from "next/navigation";
   const [available,setavailable]=useState(false)
   const {data:session,status}=useSession()
    if(status==="loading")<p>Loading User...</p>
-  if(!session)<p>Session Not Found</p>
-  console.log("Session is",session?.user)
- 
+   
+   if(!session){
+    redirect("/")
+   } 
     if(session.user.Role!=="USER"){
       redirect("/")
     }
