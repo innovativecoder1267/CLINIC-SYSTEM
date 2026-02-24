@@ -20,9 +20,7 @@ export default function AdminDashboard() {
   const [searchpatients,setsearchpatients]=useState<string>("")
   const {data:session,status}=useSession();
 
-  if(!session){
-    redirect("/")
-  }
+  
   if(session.user.Role!=="ADMIN"){
     redirect("/")
   }
