@@ -29,7 +29,7 @@ import { redirect } from "next/navigation";
   const {data:session,status}=useSession()
    if(status==="loading")<p>Loading User...</p>
    
-   if(!session){
+   if(!session.user.Role!=="ADMIN"){
     redirect("/")
    } 
     if(session.user.Role!=="USER"){
