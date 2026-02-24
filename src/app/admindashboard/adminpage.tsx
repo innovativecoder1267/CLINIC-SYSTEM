@@ -20,10 +20,11 @@ export default function AdminDashboard() {
   const [searchpatients,setsearchpatients]=useState<string>("")
   const {data:session,status}=useSession();
 
-  if(session){
-  if(session.user.Role!=="ADMIN"){
+  if(!session){
     redirect("/")
   }
+  if(session.user.Role!=="ADMIN"){
+    redirect("/")
   }
   useEffect(()=>{
     async function SlotGet() {
