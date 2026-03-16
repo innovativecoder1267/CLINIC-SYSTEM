@@ -29,9 +29,6 @@ import { redirect } from "next/navigation";
   const {data:session,status}=useSession()
    if(status==="loading")<p>Loading User...</p>
    
-    if(session?.user.Role!=="USER"){
-      redirect("/")
-    }
   const Username=session?.user.username
 
    useEffect(()=>{
