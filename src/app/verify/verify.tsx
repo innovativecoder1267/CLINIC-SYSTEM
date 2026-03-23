@@ -99,7 +99,7 @@ export default function VerifyOTP() {
           Didn’t receive the code? Check spam or try again.
         </p>
         <p>
-          Plz check the otp in the console
+          The otp is {Otp} for demo purposes we have shown in screen only
         </p>
       </div>
     </div>
