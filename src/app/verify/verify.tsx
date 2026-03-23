@@ -11,9 +11,11 @@ export default function VerifyOTP() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState<string | null>(null);
-
+  const [otp,setotp]=useState("")
   useEffect(() => {
   const param = searchParams.get("email");
+  const otp=searchParams.get("otp")
+  setotp(otp)
   setEmail(param);
 }, [searchParams]);
 
@@ -99,7 +101,7 @@ export default function VerifyOTP() {
           Didn’t receive the code? Check spam or try again.
         </p>
         <p>
-          The otp is {Otp} for demo purposes we have shown in screen only
+          The otp is {otp} for demo purposes we have shown in screen only
         </p>
       </div>
     </div>
