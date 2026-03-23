@@ -11,7 +11,7 @@ export default function VerifyOTP() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState<string | null>(null);
-  const [otp,setotp]=useState("")
+  const [otp,setotp]=useState()
   useEffect(() => {
   const param = searchParams.get("email");
   const otp=searchParams.get("otp")
