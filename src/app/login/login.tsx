@@ -41,9 +41,7 @@ import { useRouter } from "next/navigation";
     Router.replace("/userdashboard")
   }
   }
-  if(!res?.ok){
-    alert("Wrong Information entered or Trying to access the wrong portal")
-  }
+
    } 
   
 
