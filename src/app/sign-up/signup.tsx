@@ -31,6 +31,7 @@ export default function SignUp() {
 
       if (MakeReq.status === 201) {
         console.log("Your otp is",MakeReq.data.otp)
+        const otp=makeReq.data.otp
         router.push(`/verify?email=${email}&otp=${otp}`); 
       }
     } catch (err: any) {
